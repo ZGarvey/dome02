@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no">
+    <link rel="stylesheet" href="http://g.alicdn.com/msui/sm/0.6.2/css/sm.min.css">
+    <link rel="stylesheet" href="css/swiper-3.4.0.min.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<div class="page">
+    <header class="bar bar-nav">
+        <a class="button button-link button-nav pull-left" href="/demos/card" data-transition='slide-out'>
+            <span class="kao"><img src="img/logo.png"></span>
+        </a>
+        <div class="kao-two">
+        <span class="kao-one"><a href="#">免费注册</a></span>
+        <span><a href="#">登录</a></span>
+        </div>
+    </header>
+    <nav class="bar bar-tab">
+        <a class="tab-item active" href="#">
+            <span class="icon icon-home"></span>
+            <span class="tab-label">首页</span>
+        </a>
+        <a class="tab-item" href="#">
+            <span class="icon icon-me"></span>
+            <span class="tab-label">我</span>
+        </a>
+        <a class="tab-item" href="#">
+            <span class="icon icon-star"></span>
+            <span class="tab-label">收藏</span>
+        </a>
+        <a class="tab-item" href="#">
+            <span class="icon icon-settings"></span>
+            <span class="tab-label">设置</span>
+        </a>
+    </nav>
+    <div class="content">
+        <div class="swiper-container">
+            <div class="swiper-wrapper">
+                <div class="swiper-slide"><img src="img/a.jpg"></div>
+                <div class="swiper-slide"><img src="img/b.png"></div>
+                <div class="swiper-slide"><img src="img/c.jpg"></div>
+            </div>
+            <!-- 如果需要分页器 -->
+            <div class="swiper-pagination"></div>
+
+        </div>
+        <div class="haha"></div>
+        <!--<div class="card-one cf">-->
+            <!--<div class="fei-header cf">额   额</div>-->
+            <!--<div class="card-two cf">-->
+                    <!--<div class="middle-one">-->
+                        <!--<p class="size-one">年化收益率</p>-->
+                        <!--<p class="size-two">10.00% + 2.0%</p>-->
+                    <!--</div>-->
+                    <!--<div class="middle-two">-->
+                        <!--<p class="size-one">期限</p>-->
+                        <!--<p class="size-two">15天</p>-->
+                    <!--</div>-->
+                    <!--<div class="middle-three">-->
+                        <!--<p class="heng"><span class="lan"></span></p><span class="shu">45%</span>-->
+                        <!--<p class="zd"><a href="#" class="button button-fill">立即投资</a></p>-->
+                    <!--</div>-->
+            <!--</div>-->
+        <!--</div>-->
+    </div>
+</div>
+
+
+
+<script type='text/javascript' src='http://g.alicdn.com/sj/lib/zepto/zepto.min.js' charset='utf-8'></script>
+<script type='text/javascript' src='http://g.alicdn.com/msui/sm/0.6.2/js/sm.min.js' charset='utf-8'></script>
+<script src="js/swiper-3.4.0.min.js"></script>
+<script src="js/js.js"></script>
+<script>
+    $(function(){
+        $.get('http://192.168.0.113:8080/shangxing/Pro?p=1',function(data){
+            console.log(data);
+            var html='';
+            var i=0;
+            if(data.list.length!=0) {
+                for ( i ; i < data.list.length; i++) {
+                    html+= '<div class="card-one cf"><div class="fei-header cf">'+data.list[i].name+'</div><div class="card-two cf"><div class="middle-one"><p class="size-one">年化收益率</p><p class="size-two">'+data.list[i].yearGet+'%</p></div><div class="middle-two"><p class="size-one">期限</p><p class="size-two">'+data.list[i].totalDate+'</p></div><div class="middle-three"><p class="heng"><span class="lan"></span></p><span class="shu">'+Math.round((data.list[i].currentMoney/data.list[i]['totalMoney'])*100)+'%</span><p class="zd"><a href="#" class="button button-fill">立即投资</a></p></div></div></div>';
+
+                }
+                $('.haha').append(html);
+                for ( var j=0 ; j < data.list.length; j++) {
+                    $('.lan').eq(j).css('width',Math.round((data.list[j].currentMoney/data.list[j].totalMoney)*100)+'%');
+                if(Math.round((data.list[j].currentMoney/data.list[j].totalMoney))==1){  $('.zd .button').eq(j).html('还款中').css('background','#ccc')}
+
+                }
+            }
+
+
+
+        },'json');
+
+
+
+
+    })
+
+
+
+
+</script>
+</body>
+</html>

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<div id="circle"></div>
+
+<script src="http://libs.useso.com/js/jquery/1.11.0/jquery.min.js"></script>
+<script src="radialIndicator.js"></script>
+<script>
+    $('#circle').radialIndicator({
+        barColor: {0 : '#00ffff', 80 : '#FFFF00', 100: '#ff0000'},
+        radius:100,
+        barWidth: 20,
+        initValue: 80,
+        roundCorner : true,
+        percentage: true,
+        interpolate:true
+    });
+</script>
+</body>
+</html>

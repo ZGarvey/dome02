@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no">
+    <title>进度条 canvas</title>
+    <style>
+        .top{width:600px;height:600px;background-color:#ddd;}
+    </style>
+
+</head>
+<body>
+    <!--<div style="background:sandybrown"></div>-->
+    <div class="top">
+    <center>
+        <canvas id="myCanvas" width="600" height="500"></canvas>
+    </center>
+    </div>
+    <script src="http://code.jquery.com/jquery-1.4.1.min.js"></script>
+
+    <script type="text/javascript">
+
+        var lineCap = "round";
+        var pro = 0;
+        // 调用定时器实现动态效果
+
+        //圆心  半径
+        function start(){
+            DrowProgress(100,100,90,"#fff",pro,"#aaf","#f4a460","#000","#555");
+//            var timer=null,n=0;
+//            function loadCanvas(kei){
+//                timer = setInterval(function(){
+//                    if(n>kei){
+//                        clearInterval(timer);
+//                    }else{
+//                        draw(n);
+//                        n += 0.01;
+//                    }
+//                },15);
+//            }
+//            loadCanvas(progress/100);
+//            timer=null;
+            var t = setTimeout(start,30);
+            if (pro >= 100) {
+                clearTimeout(t);
+                pro = 0;
+                return;
+            }
+            pro+=1;
+
+        }
+        start();
+        function DrowProgress(x,y,radius,backColor,progress,proColor,threeColor,sizeColor,textColor){
+            var canvas = document.getElementById("myCanvas");  //画布
+            if(canvas.getContext){
+                var cts = canvas.getContext("2d");  //画笔
+            }else{
+                return
+            }
+          var ptr = cts.arc(x,y,radius,Math.PI*1.5,Math.PI*1.5);
+//            var sui =  cts.arc(x,y,radius,0,Math.PI*2,true);
+
+//            progress = sui;
+            //开始路径
+            cts.beginPath();
+            //移动到圆心
+            cts.moveTo(x,y);
+            //画圆
+            cts.arc(x,y,radius,0,Math.PI*2,true); //圆心  半径  从哪里到哪里开始画一个圈   逆时针
+            //关闭路径
+            cts.closePath();
+            //填充颜色
+            cts.fillStyle = backColor;
+            //内填充
+            cts.fill();
+
+            //扇形
+//            function draw(){
+
+            cts.beginPath();
+            cts.lineCap = lineCap;
+            cts.moveTo(x,y);
+            //cts.arc(x, y, radius - 40 / 2,  - Math.PI * 2 * progress/100, true);
+            cts.arc(x,y,radius,Math.PI*1.5,Math.PI*1 * progress/100);
+            cts.closePath();
+            cts.fillStyle = proColor;
+            cts.fill();
+
+
+            //
+            cts.beginPath();
+            cts.lineCap = lineCap;
+            cts.moveTo(x,y);
+            cts.arc(x,y,radius,Math.PI*1 * progress/100,Math.PI*1.5 * progress/100);
+            cts.closePath();
+            cts.fillStyle = threeColor;
+            cts.fill();
+
+            //第二个圆
+            cts.beginPath();
+            cts.lineCap = lineCap;
+            cts.arc(x,y,radius-(radius*0.3),0,Math.PI*2,true);
+            cts.closePath();
+            cts.fillStyle = "#ddd";  //白色
+            cts.fill();
+
+            //圆线
+//            cts.beginPath();
+//            cts.arc(x,y,radius-(radius*0.35),0,Math.PI*2,true);
+//            cts.closePath();
+//            cts.strokeStyle = backColor;
+//            cts.stroke();
+
+            //100%
+            cts.font = " bold 30pt Arial";
+            cts.fillStyle = sizeColor;
+            cts.textAlign = "center";
+            cts.textBaseline = "middle";
+            cts.moveTo(x,y);
+
+            cts.fillText(progress,x-3,y-10);
+
+
+            //
+            cts.font = " bold 10pt Arial";
+            cts.fillStyle = sizeColor;
+            cts.textAlign = "center";
+            cts.textBaseline = "middle";
+            cts.moveTo(x,y);
+            cts.fillText("%",x+37,y);
+
+
+            //
+            cts.font = " bold 8pt Arial";
+            cts.fillStyle = textColor;
+            cts.textAlign = "center";
+            cts.textBaseline = "middle";
+            cts.moveTo(x,y);
+//            cts.moveTo(c_width/2, c_height/2);  // 文字填充位置
+//            cts.fillText(value+"%", c_width/2, c_height/2-20);
+
+//            cts.fillText(progress + "%",x,y/2);
+            cts.fillText("已发7200,000", x+5, y+20);
+//            }
+
+//            var t = setTimeout(start,30);
+//            for(var i = 0; i <= kei.length;i++) {
+//                pro+=1;
+//                if (pro >= i) {
+//                    clearTimeout(t);
+//                pro = i;
+//                return;
+//                }
+//            }
+//            console.log("kei.length");
+
+
+
+        }
+
+        
+    </script>
+    <script src="js.js"></script>
+</body>
+</html>
